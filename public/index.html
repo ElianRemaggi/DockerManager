@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Docker Manager</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">DM</div>
+          <div>
+            <h1>Docker Manager</h1>
+            <p id="hostState">Conectando...</p>
+          </div>
+        </div>
+
+        <div class="metric-grid">
+          <div>
+            <span id="runningCount">0</span>
+            <small>corriendo</small>
+          </div>
+          <div>
+            <span id="stoppedCount">0</span>
+            <small>detenidos</small>
+          </div>
+        </div>
+
+        <label class="search">
+          <span>Buscar</span>
+          <input id="searchInput" type="search" placeholder="nombre, imagen, proyecto" autocomplete="off" />
+        </label>
+
+        <div class="filter-group" aria-label="Filtro de estado">
+          <button class="filter active" data-filter="all">Todos</button>
+          <button class="filter" data-filter="running">Activos</button>
+          <button class="filter" data-filter="stopped">Parados</button>
+        </div>
+
+        <div class="view-group" aria-label="Modo de vista">
+          <button class="view-mode active" data-view="list">Lista</button>
+          <button class="view-mode" data-view="compose">Por Compose</button>
+        </div>
+
+        <div class="bulk-actions">
+          <button id="refreshButton" class="secondary">Actualizar</button>
+          <button id="restartSelected" class="secondary">Reiniciar selección</button>
+        </div>
+      </aside>
+
+      <main class="content">
+        <section class="toolbar">
+          <div>
+            <h2>Contenedores</h2>
+            <p id="lastUpdated">Sin datos todavía</p>
+          </div>
+          <div class="legend">
+            <span><i class="dot running"></i> activo</span>
+            <span><i class="dot stopped"></i> detenido</span>
+          </div>
+        </section>
+
+        <section id="containerList" class="container-list" aria-live="polite"></section>
+      </main>
+
+      <aside class="details" id="detailsPanel">
+        <div
+          class="details-resizer"
+          role="separator"
+          aria-orientation="vertical"
+          aria-label="Redimensionar panel de detalles"
+          tabindex="0"
+        ></div>
+        <div class="details-content" id="detailsContent">
+          <div class="details-empty">
+            <h2>Elegí un contenedor</h2>
+            <p>Vas a ver logs, puertos, volúmenes, red, variables y labels.</p>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <template id="containerCardTemplate">
+      <article class="container-card">
+        <div class="card-top">
+          <label class="check-wrap">
+            <input type="checkbox" class="select-container" />
+          </label>
+          <button class="card-main">
+            <span class="status-dot"></span>
+            <span class="card-title"></span>
+            <span class="card-subtitle"></span>
+          </button>
+        </div>
+        <div class="description"></div>
+        <div class="info-row"></div>
+        <div class="card-actions">
+          <button class="start">Prender</button>
+          <button class="stop danger">Apagar</button>
+          <button class="restart secondary">Reiniciar</button>
+          <button class="logs secondary">Logs</button>
+        </div>
+      </article>
+    </template>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
